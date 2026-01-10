@@ -4,9 +4,14 @@ from utils.auth import token_required
 from bson import ObjectId
 from services.audio_extractor import extract_audio
 from services.transcription_service import transcribe_audio
+from services.summarization_service import summarize_text
+from services.video_metadata import get_video_title
+
+
 
 
 video_bp = Blueprint("video", __name__)
+
 
 
 @video_bp.route("/submit", methods=["POST"])
@@ -19,11 +24,12 @@ def submit_video():
         return {"message": "Video URL required"}, 400
 
     user = request.user
-
+    title = get_video_title(video_url)
     # 1️⃣ Insert video first
     video_doc = {
         "user_id": user["user_id"],
         "email": user["email"],
+        "title": title,
         "video_url": video_url,
         "status": "processing"
     }
@@ -41,19 +47,27 @@ def submit_video():
             video_id
         )
 
-        # 4️⃣ Update DB on success
+        # 4️⃣ Summarize transcript
+        summary_path, summary_text = summarize_text(
+            transcript_text,
+            video_id
+        )
+
+        # 5️⃣ Update DB on success
         videos_collection.update_one(
             {"_id": ObjectId(video_id)},
             {"$set": {
-                "status": "transcribed",
+                "status": "summarized",
                 "audio_path": audio_path,
                 "transcript_path": transcript_path,
-                "transcript": transcript_text
+                "transcript": transcript_text,
+                "summary_path": summary_path,
+                "summary": summary_text
             }}
         )
 
         return jsonify({
-            "message": "Video submitted and transcribed successfully",
+            "message": "Video submitted, transcribed and summarized successfully",
             "video_id": video_id
         }), 201
 
@@ -64,7 +78,6 @@ def submit_video():
         )
         return {"message": str(e)}, 500
 
-  
 # @video_bp.route("/submit", methods=["POST"])
 # @token_required
 # def submit_video():
@@ -180,3 +193,22 @@ def my_videos():
         del v["_id"]
 
     return jsonify(videos), 200
+
+
+@video_bp.route("/<video_id>", methods=["GET"])
+@token_required
+def get_video(video_id):
+    user = request.user
+
+    video = videos_collection.find_one({
+        "_id": ObjectId(video_id),
+        "user_id": user["user_id"]
+    })
+
+    if not video:
+        return {"message": "Video not found"}, 404
+
+    video["id"] = str(video["_id"])
+    del video["_id"]
+
+    return jsonify(video), 200

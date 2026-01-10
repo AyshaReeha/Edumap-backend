@@ -1,0 +1,62 @@
+**Structured Study Notes: Neural Networks in Under Five Minutes**
+
+I. Introduction to Neural Networks
+
+* Composed of node layers (input, hidden, output)
+* Reflect behavior of human brain, allowing computer programs to recognize patterns and solve common problems in AI and deep learning
+* Artificial neural network (ANN) vs. unartificial neural network in the human brain
+
+II. Each Node is a Linear Regression Model
+
+* Data passed from one layer to next in feed-forward network
+* Each node composed of input data, weights, bias/threshold, and output
+* Input data influenced by weights and bias/threshold, resulting in output
+
+III. Example Node: Going Surfing
+
+* Decision to go surfing predicted using linear regression model
+* Three factors influencing decision (wave's good, line up empty, shark free)
+* Weights assigned to each factor based on importance (0-5 scale)
+* Output of node determined by weighted sum of input data and threshold
+
+IV. Training Data is Critical
+
+* Neural networks rely on training data to learn and improve accuracy over time
+* Supervised learning on labeled data sets used to train algorithm
+* Cost function evaluated to determine model's accuracy
+* Gradient descent adjusts weights and biases to minimize cost function and ensure correctness for any given observation
+
+V. Types of Neural Networks Beyond Feed Forward
+
+* Recurrent neural networks (RNNs): loop connections allow processing sequential data
+* Convolutional neural networks (CNNs): specialized for image recognition using convolutional and pooling layers
+* Autoencoders: learn to compress and reconstruct input data, useful for dimensionality reduction and anomaly detection.
+
+Structured Study Notes:
+I. Introduction to Neural Networks
+
+* Definition: a feed forward neural network
+
+II. Types of Neural Networks
+
+* Convolutional Neural Networks (CNNs)
+	+ Architecture: well-suited for image recognition
+	+ Examples: used in image classification, object detection, and facial recognition
+* Recurrent Neural Networks (RNNs)
+	+ Architecture: feedback loops for processing time series data
+	+ Examples: used in sales forecasting, language translation, and speech recognition
+
+III. Differences between CNNs and RNNs
+
+* Main difference: feed forward vs. feedback loops
+* Advantages and disadvantages of each type of network
+
+IV. Additional Resources
+
+* Videos to learn more about neural networks
+* Examples of real-world applications of CNNs and RNNs
+
+V. Conclusion
+
+* Summary of key points covered in the lecture
+* Future directions for research and development in the field of neural networks

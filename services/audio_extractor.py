@@ -8,8 +8,8 @@ def extract_audio(video_url, video_id):
 
     output_template = os.path.join(AUDIO_DIR, f"{video_id}.%(ext)s")
 
-    print("FFMPEG EXISTS:", os.path.exists(r"C:\ffmpeg.exe"))
-    print("FFPROBE EXISTS:", os.path.exists(r"C:\ffprobe.exe"))
+    print("FFMPEG EXISTS:", os.path.exists(r"C:\ffmpeg\ffmpeg.exe"))
+    print("FFPROBE EXISTS:", os.path.exists(r"C:\ffmpeg\ffprobe.exe"))
 
     ydl_opts = {
         "format": "bestaudio/best",
